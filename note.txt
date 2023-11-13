@@ -1,0 +1,23 @@
+- You can assume src/pages/api dir as a server, and it's only for backend stuff in an application.
+The files inside that folder serve as both routers and controllers,
+combining the functionality of defining a route and handling the logic associated with that endpoint.
+
+- Most importantly, the file names inside api dir are route endpoints. For example, if there's a file named
+hello.ts in api dir, you can access it using http://localhost:3000/api/hello
+
+- So, it's kind safe to assume src/pages but not under api dir, it's frontend and src/pages/api is for backend.
+
+- Let's say we want a menu route page. Inside pages dir, if we don't create a menu folder and only create Menu.tsx,
+we still could access the /menu endpoint. However, this might go against next and modern file structure and
+we should always create different dirs for different pages, and use index.tsx for default component for that
+dir.
+
+- One thing to note here is, when we use dirs for client side routing, the route endpoint is already defined
+by the dir name. Nextjs will only find index.tsx inside that route as default component. If we use other names
+for default component, next wont find it and renders 404 page. For example; 
+src/pages/menuCategory/MenuCategory.tsx will render 404 page, because next can't find it's default component.
+So, we should use src/pages/menuCategory/index.tsx. Now it will work when we find http://localhost:3000/menuCategory.
+
+- That means other than index.tsx in those route dirs, the other components inside it become another route
+endpoint children. For example, to access src/pages/menuCategory/MenuCategory.tsx, we should use
+http://localhost:3000/menuCategory/MenuCategory instead of http://localhost:3000/menuCategory

@@ -18,7 +18,7 @@ interface Props {
 
 const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
   // menu created and sent from client side
-  const [menu, setMenu] = useState<CreateMenuPayload>({
+  const [newMenu, setNewMenu] = useState<CreateMenuPayload>({
     name: "",
     price: 0,
     assetUrl: "",
@@ -27,7 +27,7 @@ const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
   console.log("Create tab state: ", open);
 
   const handleCreateMenu = async () => {
-    console.log("Changed state: ", menu); // visualize changed state
+    console.log("Changed state: ", newMenu); // visualize changed state
     const response = await fetch(`${config.apiBaseUrl}/menu`, {
       method: "POST", // config method to post
       // need to specify headers to inform what we're sending, otherwise, server won't understand the data
@@ -35,12 +35,13 @@ const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(menu), // we can only send data as string datatype
+      body: JSON.stringify(newMenu), // we can only send data as string datatype
     });
     const menus = await response.json();
     console.log("Data from server: ", menus);
     setMenus(menus.data); // change state with responded menus array
     setOpen(false);
+    setNewMenu({ name: "", price: 0, assetUrl: "" }); // clear the state after sending data tot he backend
   };
 
   return (
@@ -68,13 +69,15 @@ const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
           <TextField
             placeholder="name"
             sx={{ width: 300 }}
-            onChange={(event) => setMenu({ ...menu, name: event.target.value })}
+            onChange={(event) =>
+              setNewMenu({ ...newMenu, name: event.target.value })
+            }
           />
           <TextField
             placeholder="price"
             sx={{ width: 300, mt: 3 }}
             onChange={(event) =>
-              setMenu({ ...menu, price: Number(event.target.value) })
+              setNewMenu({ ...newMenu, price: Number(event.target.value) })
             }
           />
           <Button
@@ -82,7 +85,7 @@ const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
             sx={{ mt: 3, width: "fit-content" }}
             onClick={handleCreateMenu}
           >
-            Create Menu
+            Create
           </Button>
         </Box>
       </DialogContent>

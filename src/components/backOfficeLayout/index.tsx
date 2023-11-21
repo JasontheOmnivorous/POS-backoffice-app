@@ -55,7 +55,7 @@ const BackOfficeLayout = ({ children }: Props) => {
           {/* Menu Category */}
           <Link
             style={{ textDecoration: "none" }}
-            href={"/backoffice/menuCategory"}
+            href={"/backoffice/menu-category"}
           >
             <ListItemButton>
               <ListItemIcon>

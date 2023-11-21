@@ -1,10 +1,10 @@
 import BackOfficeLayout from "@/components/backOfficeLayout";
-import MenuCard from "@/components/menuCard/MenuCard";
+import MenuCard from "@/components/menu/MenuCard";
 import config from "@/config";
 import { Menu } from "@/types/menu";
 import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import CreateMenu from "./CreateMenu";
+import CreateMenu from "../../../components/menu/CreateMenu";
 
 const MenuPage = () => {
   // menus that server responded
@@ -22,7 +22,9 @@ const MenuPage = () => {
   const fetchMenu = async () => {
     const response = await fetch(`${config.apiBaseUrl}/menu`);
     const data = await response.json();
+
     setMenus(data.data);
+    console.log("data from server: ", menus);
   };
 
   return (

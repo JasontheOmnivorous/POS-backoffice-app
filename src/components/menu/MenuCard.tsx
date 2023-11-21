@@ -9,7 +9,7 @@ interface Props {
 
 const MenuCard = ({ menu }: Props) => {
   return (
-    <Link href={String(menu.id)} style={{ textDecoration: "none" }}>
+    <Link href={`menu/${String(menu.id)}`} style={{ textDecoration: "none" }}>
       <Card
         sx={{ width: 150, height: 150, borderRadius: 10, boxShadow: 2, m: 1 }}
         variant="outlined"

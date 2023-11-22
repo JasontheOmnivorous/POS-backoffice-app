@@ -10,3 +10,9 @@ export interface Menu extends CreateMenuPayload {
   id: number;
   isArchived: boolean;
 }
+
+export interface InitialMenuSliceState {
+  items: Menu[];
+  isLoading: boolean;
+  error: Error | null;
+}

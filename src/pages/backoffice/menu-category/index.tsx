@@ -1,26 +1,15 @@
 import BackOfficeLayout from "@/components/backOfficeLayout";
 import ItemCard from "@/components/itemCard/ItemCard";
 import CreateMenuCategory from "@/components/menuCategory/CreateMenuCategory";
-import config from "@/config";
-import { MenuCategoryType } from "@/types/menuCategory";
+import { useAppSelector } from "@/store/hooks";
 import { Category } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const MenuCategory = () => {
-  const [menuCategories, setMenuCategories] = useState<MenuCategoryType[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  console.log("Backend menucat: ", menuCategories);
-
-  useEffect(() => {
-    fetchMenuCategories();
-  }, []);
-
-  const fetchMenuCategories = async () => {
-    const response = await fetch(`${config.apiBaseUrl}/menu-category`);
-    const data = await response.json();
-    setMenuCategories(data.data);
-  };
+  const menuCategories =
+    useAppSelector((store) => store.menuCategory.items) || [];
 
   return (
     <BackOfficeLayout>
@@ -31,11 +20,7 @@ const MenuCategory = () => {
           </Button>
         </Box>
         {/* pass setOpen function as a prop */}
-        <CreateMenuCategory
-          open={open}
-          setOpen={setOpen}
-          setMenuCategories={setMenuCategories}
-        />
+        <CreateMenuCategory open={open} setOpen={setOpen} />
         {/* show responded menus */}
         <Box sx={{ display: "flex", flexWrap: "wrap", margin: 5 }}>
           {menuCategories?.map((menuCategory) => (

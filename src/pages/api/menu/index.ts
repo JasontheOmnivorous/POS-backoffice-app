@@ -17,18 +17,12 @@ const postHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
   const id = menus.length > 0 ? menus[menus.length - 1].id + 1 : 1;
   menus.push({ id, ...validData, isArchived: false });
-  res.status(201).json({
-    status: "success",
-    data: menus,
-  });
+  res.status(201).send(menus);
 };
 
 const getHandler = (req: NextApiRequest, res: NextApiResponse) => {
   console.log("GET menus: ", menus);
-  res.status(200).json({
-    status: "success",
-    data: menus,
-  });
+  res.status(200).send(menus);
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

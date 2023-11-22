@@ -1,31 +1,14 @@
 import BackOfficeLayout from "@/components/backOfficeLayout";
 import MenuCard from "@/components/menu/MenuCard";
-import config from "@/config";
-import { Menu } from "@/types/menu";
+import { useAppSelector } from "@/store/hooks";
 import { Box, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateMenu from "../../../components/menu/CreateMenu";
 
 const MenuPage = () => {
-  // menus that server responded
-  const [menus, setMenus] = useState<Menu[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  console.log("Render menu");
-  console.log("Menus from server: ", menus);
-
-  // control infinite loop with useEffect
-  useEffect(() => {
-    fetchMenu();
-  }, []);
-
-  // fetch data from server as soon as the page is loaded
-  const fetchMenu = async () => {
-    const response = await fetch(`${config.apiBaseUrl}/menu`);
-    const data = await response.json();
-
-    setMenus(data.data);
-    console.log("data from server: ", menus);
-  };
+  // we need to use this guy instead of native rtk useSelector because this guy knows the type of the store
+  const menus = useAppSelector((store) => store.menu.items) || []; // get menus from the store
 
   return (
     <BackOfficeLayout>
@@ -36,7 +19,7 @@ const MenuPage = () => {
           </Button>
         </Box>
         {/* pass setOpen function as a prop */}
-        <CreateMenu open={open} setOpen={setOpen} setMenus={setMenus} />
+        <CreateMenu open={open} setOpen={setOpen} />
         {/* show responded menus */}
         <Box sx={{ display: "flex", flexWrap: "wrap", margin: 5 }}>
           {menus?.map((menu) => (

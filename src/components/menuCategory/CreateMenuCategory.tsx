@@ -1,8 +1,7 @@
 import config from "@/config";
-import {
-  CreateMenuCategoryPayload,
-  MenuCategoryType,
-} from "@/types/menuCategory";
+import { useAppDispatch } from "@/store/hooks";
+import { setMenuCategories } from "@/store/slices/menuCategory";
+import { CreateMenuCategoryPayload } from "@/types/menuCategory";
 import {
   Box,
   Button,
@@ -18,16 +17,15 @@ import { useState } from "react";
 interface Props {
   open: boolean;
   setOpen: (val: boolean) => void;
-  setMenuCategories: (val: MenuCategoryType[]) => void;
 }
 
-const CreateMenuCategory = ({ open, setOpen, setMenuCategories }: Props) => {
+const CreateMenuCategory = ({ open, setOpen }: Props) => {
   const [newMenuCategory, setNewMenuCategory] =
     useState<CreateMenuCategoryPayload>({
       name: "",
       isAvailable: true, // default state to true
     });
-  console.log("Frontend menucat: ", newMenuCategory);
+  const dispatch = useAppDispatch();
 
   const handleCreateMenuCategory = async () => {
     const response = await fetch(`${config.apiBaseUrl}/menu-category`, {
@@ -38,7 +36,7 @@ const CreateMenuCategory = ({ open, setOpen, setMenuCategories }: Props) => {
       body: JSON.stringify(newMenuCategory),
     });
     const data = await response.json();
-    setMenuCategories(data.data);
+    dispatch(setMenuCategories(data)); // dispatch returned menuCategories from the server
     setOpen(false);
     setNewMenuCategory({ name: "", isAvailable: true }); // reset state after creating
   };

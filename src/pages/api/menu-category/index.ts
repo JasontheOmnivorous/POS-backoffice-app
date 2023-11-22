@@ -21,18 +21,12 @@ const handlePost = (req: NextApiRequest, res: NextApiResponse) => {
     isArchived: false,
   });
   console.log("Inside POST", menuCategories);
-  return res.status(201).json({
-    status: "success",
-    data: menuCategories,
-  });
+  return res.status(201).send(menuCategories);
 };
 
 const handleGet = (req: NextApiRequest, res: NextApiResponse) => {
   console.log("Inside GET", menuCategories);
-  return res.status(200).json({
-    status: "success",
-    data: menuCategories,
-  });
+  return res.status(200).send(menuCategories);
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

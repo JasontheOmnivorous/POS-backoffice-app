@@ -1,5 +1,7 @@
 import config from "@/config";
-import { CreateMenuPayload, Menu } from "@/types/menu";
+import { useAppDispatch } from "@/store/hooks";
+import { setMenus } from "@/store/slices/menu";
+import { CreateMenuPayload } from "@/types/menu";
 import {
   Box,
   Button,
@@ -13,18 +15,16 @@ import { useState } from "react";
 interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
-  setMenus: (menus: Menu[]) => void;
 }
 
-const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
+const CreateMenu = ({ open, setOpen }: Props) => {
   // menu created and sent from client side
   const [newMenu, setNewMenu] = useState<CreateMenuPayload>({
     name: "",
     price: 0,
     assetUrl: "",
   });
-  console.log("Menu rendered");
-  console.log("Create tab state: ", open);
+  const dispatch = useAppDispatch();
 
   const handleCreateMenu = async () => {
     console.log("Changed state: ", newMenu); // visualize changed state
@@ -38,10 +38,9 @@ const CreateMenu = ({ open, setOpen, setMenus }: Props) => {
       body: JSON.stringify(newMenu), // we can only send data as string datatype
     });
     const menus = await response.json();
-    console.log("Data from server: ", menus);
-    setMenus(menus.data); // change state with responded menus array
+    dispatch(setMenus(menus)); // put returned menus from the server as payload
     setOpen(false);
-    setNewMenu({ name: "", price: 0, assetUrl: "" }); // clear the state after sending data tot he backend
+    setNewMenu({ name: "", price: 0, assetUrl: "" }); // clear the state after sending data to the backend
   };
 
   return (

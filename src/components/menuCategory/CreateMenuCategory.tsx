@@ -1,6 +1,5 @@
-import config from "@/config";
 import { useAppDispatch } from "@/store/hooks";
-import { setMenuCategories } from "@/store/slices/menuCategory";
+import { createMenuCategory } from "@/store/slices/menuCategory";
 import { CreateMenuCategoryPayload } from "@/types/menuCategory";
 import {
   Box,
@@ -28,15 +27,7 @@ const CreateMenuCategory = ({ open, setOpen }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleCreateMenuCategory = async () => {
-    const response = await fetch(`${config.apiBaseUrl}/menu-category`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(newMenuCategory),
-    });
-    const data = await response.json();
-    dispatch(setMenuCategories(data)); // dispatch returned menuCategories from the server
+    dispatch(createMenuCategory(newMenuCategory)); // dispatch returned menuCategories from the server
     setOpen(false);
     setNewMenuCategory({ name: "", isAvailable: true }); // reset state after creating
   };

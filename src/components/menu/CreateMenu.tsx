@@ -1,6 +1,5 @@
-import config from "@/config";
 import { useAppDispatch } from "@/store/hooks";
-import { setMenus } from "@/store/slices/menu";
+import { createMenu } from "@/store/slices/menu";
 import { CreateMenuPayload } from "@/types/menu";
 import {
   Box,
@@ -27,18 +26,8 @@ const CreateMenu = ({ open, setOpen }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleCreateMenu = async () => {
-    console.log("Changed state: ", newMenu); // visualize changed state
-    const response = await fetch(`${config.apiBaseUrl}/menu`, {
-      method: "POST", // config method to post
-      // need to specify headers to inform what we're sending, otherwise, server won't understand the data
-      // NOTE: headers are very important
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(newMenu), // we can only send data as string datatype
-    });
-    const menus = await response.json();
-    dispatch(setMenus(menus)); // put returned menus from the server as payload
+    // pass data as a payload to createMenu thunk (async action) to send this data to the server
+    dispatch(createMenu(newMenu)); // put returned menus from the server as payload
     setOpen(false);
     setNewMenu({ name: "", price: 0, assetUrl: "" }); // clear the state after sending data to the backend
   };

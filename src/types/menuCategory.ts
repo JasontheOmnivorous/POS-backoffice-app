@@ -13,3 +13,8 @@ export interface InitialMenuCategorySliceState {
   isLoading: boolean;
   error: Error | null;
 }
+
+export interface UpdateMenuCategoryPayload {
+  id: number;
+  name: string;
+}

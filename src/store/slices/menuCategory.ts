@@ -2,6 +2,7 @@ import config from "@/config";
 import {
   CreateMenuCategoryPayload,
   InitialMenuCategorySliceState,
+  UpdateMenuCategoryPayload,
 } from "@/types/menuCategory";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -23,6 +24,13 @@ export const createMenuCategory = createAsyncThunk(
     });
     const data = await response.json();
     thunkApi.dispatch(setMenuCategories(data));
+  }
+);
+
+export const updateMenuCategory = createAsyncThunk(
+  "menuCategory/updateMenuCategory",
+  async (payload: UpdateMenuCategoryPayload, thunkApi) => {
+    console.log(payload);
   }
 );
 

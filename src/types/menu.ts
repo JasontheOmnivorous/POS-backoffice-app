@@ -16,3 +16,9 @@ export interface InitialMenuSliceState {
   isLoading: boolean;
   error: Error | null;
 }
+
+export interface UpdateMenuPayload {
+  id: number;
+  name: string;
+  price: number;
+}

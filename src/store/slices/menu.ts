@@ -1,6 +1,10 @@
 import config from "@/config";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CreateMenuPayload, InitialMenuSliceState } from "./../../types/menu";
+import {
+  CreateMenuPayload,
+  InitialMenuSliceState,
+  UpdateMenuPayload,
+} from "./../../types/menu";
 
 // default states for this slice
 const initialState: InitialMenuSliceState = {
@@ -27,6 +31,13 @@ export const createMenu = createAsyncThunk(
   }
 );
 
+export const updateMenu = createAsyncThunk(
+  "menu/updateMenu",
+  async (payload: UpdateMenuPayload, thunkApi) => {
+    console.log(payload);
+  }
+);
+
 // all slices combined => the store
 // same with ideology of all react components combined => an app
 export const menuSlice = createSlice({
@@ -35,7 +46,7 @@ export const menuSlice = createSlice({
   reducers: {
     // setup action to change initialState value
     // state's value is current/latest state of the initialState
-    // when we make a function inside createSlice that changes the state, redux will assume this as an action
+    // when we make a function inside createSlice's reducer that changes the state, redux will assume this as an action
     // NOTE: actions inside reducer's obj value are pure functions, means they cant be async
     setMenus: (state, action) => {
       state.items = action.payload; // changes items' value to payload

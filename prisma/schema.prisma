@@ -11,18 +11,18 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) // setup id to start from 1 and auto increment itself
   name String
-  email String @unique
-  isArchived Boolean @default(false)
+  email String @unique // unique identifier
+  isArchived Boolean @default(false) // set default to false
 }
 
 model Menu {
   id Int @id @default(autoincrement())
   name String @unique
   price Decimal
-  isAvailable Boolean? @default(true)
-  menuCategory MenuCategory @relation(fields: [menuCategoryID], references: [id])
+  isAvailable Boolean? @default(true) // ? means this column is optional
+  menuCategory MenuCategory @relation(fields: [menuCategoryID], references: [id]) // means menuCategoryID field is related to id field of MenuCategory
   menuCategoryID Int
 }
 
@@ -30,5 +30,5 @@ model MenuCategory {
   id Int @id @default(autoincrement())
   name String @unique
   isAvailable Boolean? @default(true)
-  menus Menu[]
+  menus Menu[] // identifies many menus (array of menus) inside a menu category
 }

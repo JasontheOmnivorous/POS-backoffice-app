@@ -23,7 +23,7 @@ model Menu {
   price Decimal
   isAvailable Boolean? @default(true) // ? means this column is optional
   menuCategory MenuCategory @relation(fields: [menuCategoryID], references: [id]) // means menuCategoryID field is related to id field of MenuCategory
-  menuCategoryID Int
+  menuCategoryID Int // foreign key
 }
 
 model MenuCategory {

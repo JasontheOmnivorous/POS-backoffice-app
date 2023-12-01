@@ -2,7 +2,7 @@ import { prisma } from "@/utils/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const getHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const users = await prisma.user.findMany(); // query all the users from the DB
+  const users = await prisma.user.findMany({ where: { isArchived: false } }); // query all the users that are not archived from the DB
   return res.status(200).send(users);
 };
 
